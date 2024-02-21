@@ -1,0 +1,36 @@
+You are given two strings word1 and word2. Merge the strings by adding letters in alternating order, starting with word1. If a string is longer than the other, append the 
+additional letters onto the end of the merged string.
+
+Return the merged string.
+
+https://leetcode.com/problems/merge-strings-alternately/description/?envType=study-plan-v2&envId=leetcode-75
+
+class Solution {
+public:
+    string mergeAlternately(string word1, string word2) {
+        int n=word1.size();
+        int m=word2.size();
+        // int size=n+m;
+        int i=0,j=0,k=0;
+        string res;
+        while(i<n && j<m){
+            // res[k++]=word1[i++];
+            res+=word1[i++];
+            // res[k++]=word2[j++];
+            res+=word2[j++];
+        }
+        if(n>m){
+            while(i<n){
+                // res[k++]=word1[i++];
+                res+=word1[i++];
+            }
+        }
+        else if(m>n){
+            while(j<m){
+                // res[k++]=word2[j++];
+                res+=word2[j++];
+            }
+        }
+        return res;
+    }
+};
