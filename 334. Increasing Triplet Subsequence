@@ -1,0 +1,38 @@
+Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
+
+ https://leetcode.com/problems/increasing-triplet-subsequence/?envType=study-plan-v2&envId=leetcode-75
+
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        // if (nums.size() < 3) {
+        //     return false;
+        // }
+        // int n=nums.size();
+        // for(int i=0;i<n;i++){
+        //     int j=i+1,k=j+1;
+        //     if((i<j && j<k)&&(nums[i]<nums[j]&&nums[j]<nums[k])){
+        //         return true;
+        //     }
+        // }
+        // return false;
+
+        if (nums.size() < 3) {
+            return false;
+        }
+        int a = INT_MAX;
+        int b = INT_MAX;
+
+        for (int num : nums) {
+            if (num <= a) {
+                a = num;
+            } else if (num <= b) {
+                b = num;
+            } else {
+                return true;
+            }
+        }
+
+        return false;
+    }
+};
