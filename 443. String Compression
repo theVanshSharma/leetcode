@@ -1,29 +1,91 @@
-Given an integer array nums, return an array answer such that answer[i] is equal to the product of all the elements of nums except nums[i].
+Given an array of characters chars, compress it using the following algorithm:
 
-The product of any prefix or suffix of nums is guaranteed to fit in a 32-bit integer.
+Begin with an empty string s. For each group of consecutive repeating characters in chars:
 
-You must write an algorithm that runs in O(n) time and without using the division operation.
+If the group's length is 1, append the character to s.
+Otherwise, append the character followed by the group's length.
+The compressed string s should not be returned separately, but instead, be stored in the input character array chars. 
+Note that group lengths that are 10 or longer will be split into multiple characters in chars.
 
-https://leetcode.com/problems/product-of-array-except-self/description/?envType=study-plan-v2&envId=leetcode-75
+After you are done modifying the input array, return the new length of the array.
+
+You must write an algorithm that uses only constant extra space.
+
+https://leetcode.com/problems/string-compression/?envType=study-plan-v2&envId=leetcode-75
+
+// class Solution {
+// public:
+//     int compress(vector<char>& chars) {
+//         int n = chars.size();
+//         string res = "\0";
+//         int cnt = 1;
+//         if(n==1){
+//             return 1;
+//         }
+//         for (int i = 0; i < n - 1; i++) {
+//             if (chars[i] == chars[i + 1]) {
+//                 cnt++;
+//             } else {
+//                 res += chars[i];
+//                 if(cnt==1){
+//                     res+=chars[i];
+//                 }
+//                 else if (cnt <= 9) {
+//                     string c = to_string(cnt);
+//                     res += c;
+//                 } 
+//                 else if(cnt>9) {
+//                     string num = to_string(cnt);
+//                     for (auto ch : num) {
+//                         res += ch;
+//                     }
+//                 }
+//                 cnt = 1;
+//             }
+//         }
+//         res += chars[n - 1]; 
+//         if (cnt > 1) {
+//             string num = to_string(cnt);
+//             for (auto ch : num) {
+//                 res += ch;
+//             }
+//         }
+//         for(int i=0;i<res.size();i++){
+//             chars[i]=res[i];
+//         }
+//         return res.size();
+//     }
+// };
 
 class Solution {
 public:
-    vector<int> productExceptSelf(vector<int>& nums) {
-        int n=nums.size();
-        vector<int> pre(n);
-        vector<int> suff(n);
-        vector<int> op(n);
-        pre[0]=1;
-        suff[n-1]=1;
-        for(int i=1;i<n;i++){
-            pre[i]=pre[i-1]*nums[i-1];
+    int compress(vector<char>& chars) {
+        int n=chars.size();
+        if(n==1)return 1;
+        int i=0;
+        int iprint=0;
+        while(i<n){
+            int count=0;
+            char curr=chars[i];
+            while(i<n && chars[i]==curr){
+                count++;
+                i++;
+            }
+            chars[iprint]=curr;
+            iprint++;
+            if(count>1){
+                string str=to_string(count);
+                char arr[str.length()];
+                for(int i=0;i<str.length();i++){
+                    arr[i]=str[i];
+                }
+                for(auto dig:arr){
+                    chars[iprint]=dig;
+                    iprint++;
+                    // cout<<dig<<" ";
+                }
+            }
         }
-        for(int i=n-2; i>=0;i--){
-            suff[i]=suff[i+1]*nums[i+1];
-        }
-        for(int i=0;i<n;i++){
-            op[i]=pre[i]*suff[i];
-        }
-        return op;
+        return iprint;
     }
 };
