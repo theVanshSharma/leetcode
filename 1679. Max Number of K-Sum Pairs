@@ -1,0 +1,38 @@
+You are given an integer array nums and an integer k.
+
+In one operation, you can pick two numbers from the array whose sum equals k and remove them from the array.
+
+Return the maximum number of operations you can perform on the array.
+
+https://leetcode.com/problems/max-number-of-k-sum-pairs/description/?envType=study-plan-v2&envId=leetcode-75
+
+class Solution {
+public:
+    int maxOperations(vector<int>& nums, int k) {
+        // int n=nums.size();
+        // int cnt=0;
+        // unordered_map<int,int> mp;
+        // for(int i=0;i<n;i++){
+        //     int complement = k-nums[i];
+        //     if(mp.find(complement)!=mp.end()){
+        //         cnt++;
+        //         mp.erase(complement);
+        //     } 
+        //     mp.insert({nums[i],i});
+        // }
+        // return cnt;
+
+        sort(nums.begin(),nums.end());
+        int n=nums.size();
+        int s=0,e=n-1,cnt=0;
+        while(s<e){
+            if((nums[s]+nums[e])==k){
+                cnt++;
+                s++; e--;
+            }
+            else if((nums[s]+nums[e])>=k) e--;
+            else s++;
+        }
+        return cnt;
+    }
+};
