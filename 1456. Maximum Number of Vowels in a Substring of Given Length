@@ -1,0 +1,54 @@
+Given a string s and an integer k, return the maximum number of vowel letters in any substring of s with length k.
+
+Vowel letters in English are 'a', 'e', 'i', 'o', and 'u'.
+
+https://leetcode.com/problems/maximum-number-of-vowels-in-a-substring-of-given-length/description/?envType=study-plan-v2&envId=leetcode-75
+
+class Solution {
+public:
+    int vowels(string str){
+        int cnt=0;
+        for(int i=0;i<str.size();i++){
+            cnt=0;
+            if(str[i]=='a'||str[i]=='e'||str[i]=='i'||str[i]=='o'||str[i]=='u'){
+                cnt++;
+            }
+        }
+        return cnt;
+    }
+    int maxVowels(string s, int k) {
+        int max_vowels=INT_MIN;
+        int n=s.size();
+        string str1=s.substr(0,k);
+        int cnt=vowels(str1);
+        max_vowels=max(max_vowels,cnt);
+        for(int i=1;i<=n-k;i++){
+            str1=s.substr(i,k+i);
+            cnt=vowels(str1);
+            max_vowels=max(max_vowels,cnt);
+        }
+        return max_vowels;
+    }
+};
+
+// class Solution {
+// public:
+//     int maxVowels(string s, int k) {
+//         int n=s.size();
+//         int count=0;
+//         for(int m=0;m<k;m++){
+//             if(s[m]=='a'||s[m]=='e'||s[m]=='i'||s[m]=='o'||s[m]=='u' )
+//             count++;
+//         }
+//         int maxi=count;
+
+//         for(int m=1;m<=n-k;m++){
+//             if(s[m-1]=='a'||s[m-1]=='e'||s[m-1]=='i'||s[m-1]=='o'||s[m-1]=='u' ) count--;
+//             // { count-=1;}
+//             if(s[m+k-1]=='a'||s[m+k-1]=='e'||s[m+k-1]=='i'||s[m+k-1]=='o'||s[m+k-1]=='u' ) count++;
+//             // { count+=1;}
+//             maxi=max(count,maxi);
+//         }
+//         return maxi;
+//     }
+// };
