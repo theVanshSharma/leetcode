@@ -1,0 +1,46 @@
+Given an array of integers arr, return true if the number of occurrences of each value in the array is unique or false otherwise.
+
+https://leetcode.com/problems/unique-number-of-occurrences/description/?envType=study-plan-v2&envId=leetcode-75
+
+// class Solution {
+// public:
+//     bool uniqueOccurrences(vector<int>& arr) {
+//         vector<int>count;
+//         for(int i:arr){
+//             count[i]++;
+//         }
+//         // count.sort();
+//         sort(count.begin(),count.end());
+//         int idx=0;
+//         while(!count.empty()){
+//             int x = count.front();
+//             // count.pop_front();
+//             count.erase(idx);
+//             if(count.front()==x) return false;
+//         }
+//         return true;
+//     }
+// };
+
+
+class Solution {
+public:
+    bool uniqueOccurrences(vector<int> &arr)
+    {   
+        priority_queue<int> pq; 
+        map<int, int> mp; 
+        for (int a : arr) 
+            mp[a]++; 
+        
+        for (auto item : mp)
+            pq.push(item.second); 
+        
+        while(pq.size()){
+            int tp = pq.top(); 
+            pq.pop(); 
+            if (pq.size() && tp == pq.top())
+                return false; 
+        }
+        return true; 
+    }
+};
